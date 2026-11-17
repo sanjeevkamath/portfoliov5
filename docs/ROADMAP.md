@@ -1,5 +1,19 @@
 # Roadmap
 
+## Current checkpoint — Sky study 002, awaiting creative review
+
+The user requested an immersive, art-led remake, then explicitly asked for shorter work chunks and more control. The current draft is a review checkpoint, not a completed or approved design milestone. Next: review the opening only; choose one small change together before further implementation.
+
+Implemented: full-screen generated cloud layers, live name typography, a procedural About airship, three striped balloons, native story dialogs, chapter anchors, motion pause/reduced-motion support, and an unresolved horizon. No new dependencies or deployment.
+
+Final `npm run build`, `npm run typecheck`, and `git diff --check` passed on 2026-11-17.
+
+Verified in-browser: desktop 1440 × 900, mobile 390 × 844, narrow 320 × 568; no observed horizontal overflow. All three experience titles and About content opened; Escape/close/return and focus restoration worked. Explicit Tab wrapping was added after an embedded-browser issue, then verified in both directions. Pause state and navigation while paused were checked. Short-screen balloon/header overlap was corrected and visually rechecked. No browser console errors/warnings were observed in the inspected logs.
+
+Limits: no forced WebGL failure, OS reduced-motion emulation, physical-device GPU profiling, or formal contrast/screen-reader audit. Artwork is layered raster, not volumetric clouds; name is serif typography, not cloud-sculpted lettering. Later sketch chapters remain unbuilt. Asset prompts/provenance and design references are in ASSETS.md and REFERENCES.md.
+
+The pre-existing user development server at port 3000 was reused and left running. A second attempted server exited on the existing-server lock.
+
 ## Milestone 1 — Foundation
 
 Scope: local application, documentation, gradient, viewport scene, vertical scroll, simple geometry, placeholder content, build verification.

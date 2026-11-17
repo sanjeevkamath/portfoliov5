@@ -1,5 +1,13 @@
 # Vision
 
+## Latest creative direction — 2026-11-17
+
+The user rejected the initial conventional landing-page composition and requested an art-led, immersive world informed by top-tier Awwwards references. The environment should dominate the screen, with content discovered through encounters. Transitions from the sky into other themes are welcome for exploration; no additional world is approved yet.
+
+The supplied sketch proposes cloud/name → About blimp → experience balloons → project-banner airplane → possible floating islands → ground/contact. This is a narrative reference, not a finalized asset list. Study 002 explores only the opening, blimp, balloons, and an unresolved horizon. The cloud photograph guides scale and atmosphere. See `REFERENCES.md`.
+
+Study 002's cinematic cloud assets, serif title, procedural models, and modal are implemented experiments awaiting creative review, not approved final decisions.
+
 ## Confirmed requirements
 
 - A playful, polished, modern portfolio experienced as a vertical journey through the sky.
@@ -26,6 +34,6 @@ Environmental possibilities include clouds at different depths, birds, airplanes
 
 Final palette, typography, lighting/materials, object silhouette, composition, motion timing, camera path, scroll depth, mobile scene density, final content, and hosting. Camera zoom, modal, and side panel are all open options.
 
-## Milestone 1 boundary
+## Milestone 1 boundary (completed; historical)
 
 Build the application and documentation foundation, a sky gradient, a viewport-sized scene section, native vertical scroll, and simple objects. No final art direction, detailed assets, elaborate motion, or full portfolio content.

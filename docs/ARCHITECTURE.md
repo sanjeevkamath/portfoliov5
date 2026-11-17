@@ -1,54 +1,50 @@
 # Architecture
 
-## Current implementation
+## Current prototype
 
-Next.js App Router serves the page and portfolio content as server components. A small client wrapper dynamically loads the R3F canvas with SSR disabled. Three.js supplies built-in geometry/materials; no external models, textures, or font requests are required.
+Next.js App Router + TypeScript + Tailwind + React Three Fiber + Three.js. No new packages were added for sky study 002. Webpack remains the build/dev compiler due to the original Turbopack worker-port issue.
 
 ```text
-app/page.tsx (server)
-├── sky viewport: semantic introduction + navigation
-│   └── SkyScene (client loading/error boundary)
-│       └── SkyCanvas (dynamic R3F canvas)
-│           └── PlaceholderBalloon × 3 ← scene-config.ts
-└── ExperienceList (server HTML) ← data/experiences.ts
+app/page.tsx
+└── SkyJourney (client controller, pre-rendered HTML)
+    ├── fixed decorative world
+    │   ├── CSS cloud backdrop and alpha foreground
+    │   └── SkyScene error/loading boundary → dynamic SkyCanvas
+    │       ├── Airship
+    │       └── PlaceholderBalloon × 3
+    ├── semantic document sections + native object buttons
+    ├── chapter anchors / motion control / progress
+    └── StoryDialog ← selected story ID
 ```
 
-`types/experience.ts` defines the content contract. Stable experience IDs connect the content and scene configuration without putting presentation coordinates inside portfolio data. Scene config restricts IDs to actual placeholder IDs at compile time.
+The cloud artwork is local WebP (about 288 KB combined). It remains visible without WebGL. No external image or font requests. Assets/provenance are in `docs/ASSETS.md`.
 
-The browser document is the vertical scroll container. A CSS gradient spans the journey; the first section is viewport-sized and the next contains experience placeholders. The canvas itself sits inside the scene figure. Native flow preserves zoom, small-screen overflow, anchors, keyboard navigation, and touch behavior. No nested scrolling or pinned canvas exists yet.
+## Separation of responsibilities
 
-## Dependency choices
+- `data/experiences.ts` owns content and stable IDs. No coordinates or animation data.
+- `scene-config.ts` defines normalized object positions, scale, palette, and a small mutable frame contract. IDs are constrained to valid experience IDs.
+- `SkyJourney` owns selected story, hover/focus, paused state, chapter, and native navigation. One animation-frame-throttled scroll listener updates a mutable frame ref and CSS properties; React state changes only when chapter/interaction changes.
+- `SkyCanvas` reads the frame without React rerenders per animation frame. It positions objects to match their corresponding document sections and shared normalized HTML target coordinates.
+- `Airship` and `PlaceholderBalloon` own procedural geometry/materials only. Balloon envelope uses a smooth lathed profile with an original striped shader; no asset collection.
+- `StoryDialog` owns content presentation and native dialog lifecycle. Its selection contract is `"about" | ExperienceId | null`. Camera focus or a side panel can consume this state later without rewriting portfolio data or geometry.
+- `useMotionPreference` subscribes to reduced-motion and page-visibility changes with `useSyncExternalStore`; server snapshot is motion-disabled.
 
-| Technology | Current use / trade-off |
-| --- | --- |
-| Next.js + React | Routing, server-rendered content, client boundary; more framework than a static page needs, but matches project preference |
-| TypeScript | Strict content/component contracts |
-| Tailwind CSS | Installed through PostCSS; utilities for simple layout, ordinary CSS for scene composition and temporary tokens |
-| R3F + Three.js | Validates the real 3D rendering boundary; increases client bundle weight |
-| Drei | Deferred; current primitives need no helper library |
-| GSAP / ScrollTrigger | Deferred; no coordinated timelines or scroll-driven motion in M1 |
+## Scrolling and rendering
 
-The exact dependency graph is in `package-lock.json`. React 19 pairs with R3F 9. Current source guidance: [Next installation](https://nextjs.org/docs/app/getting-started/installation), [R3F compatibility](https://r3f.docs.pmnd.rs/getting-started/installation), [Tailwind + Next](https://tailwindcss.com/docs/installation/framework-guides/nextjs).
+The document remains the only scroll container. A full-screen fixed world sits behind three `100svh` sections and a `75svh` horizon. Scroll position is normalized against the actual first section height. Objects translate with document content, while background cloud layers move more slowly; no wheel/touch interception or scroll library.
 
-The `dev` and `build` scripts explicitly use Webpack. The initial Turbopack build failed on a PostCSS worker's internal port binding in this environment, including after an elevated retry. Webpack passed production compilation and static generation. Reevaluate Turbopack after an environment/framework change; no app-level workaround is required.
+One canvas, DPR capped at 1.5. Continuous frames only while motion is permitted, no dialog is open, and an object chapter is active. Else demand rendering, with scroll invalidation so static objects remain aligned. No postprocessing, shadows, large 3D downloads, or volumetric raymarching. Measure on real phones before adding complexity.
 
-## Rendering and resilience
+The scene is decorative to assistive technology. Semantic HTML buttons provide all activation. Native `<dialog>` provides focus confinement, Escape handling, and focus restoration; body scrolling is locked only while the modal is open and restored afterward.
 
-- One canvas; `frameloop="demand"` avoids idle rendering, DPR capped at 1.5.
-- No shadows, postprocessing, textures, continuous frame callbacks, or external assets.
-- Three objects use low-segment primitives; viewport width scales their group on narrow screens.
-- CSS fallback is shown during dynamic loading, on missing WebGL, or on a caught scene render error. Scene content is decorative; HTML never depends on renderer success.
-- Dynamic loading splits the canvas code, but does not make its total download small. Profile on a real mobile device before increasing scene complexity.
-- No runtime context-loss recovery or adaptive performance system exists yet. Test those when introducing long-lived animation/scroll scenes.
+## Fallbacks and limitations
 
-## Future interaction boundary — recommendation, not implemented
+If dynamic import or scene rendering fails, the error boundary omits the canvas; the independent cloud world, labels, native controls, and dialogs remain. This is a usable visual/content fallback, not a separate illustrated object renderer. No runtime context-loss recovery yet.
 
-Keep one `selectedExperienceId` in a shared client controller when interaction work begins. Both native HTML buttons and 3D activation should dispatch selection by ID. Content lookup remains separate. A detail renderer can then be a modal, side panel, or inline presentation; an optional camera controller can respond to the same selection.
+Reduced motion/pause removes nonessential environmental motion. Document-relative object translation remains to maintain alignment with controls during normal scrolling. Background drift stops when hidden. There is no scroll easing, loading gate, sound, or custom cursor.
 
-Do not build a generic interaction plugin system now. Extract only the shared selection/close contract needed by the first comparison prototype. Details need a semantic heading and appropriate focus management; closing restores focus to a meaningful HTML control even when selection began on a mesh.
-
-Keep future motion logic in scene controllers/hooks, separate from portfolio records. Introduce a shared motion-preference policy before adding movement. Reduced motion should remove nonessential drift/parallax/camera travel; continuous motion may also need a pause control.
+This is intentionally 2.5D. Raster clouds cannot support arbitrary camera angles or true volumetric traversal. If this direction is approved, evaluate cloud impostors/volumes and optimized models as separate prototypes. Keep a static alternative.
 
 ## Delivery
 
-Local npm workflow; no external services, environment variables, backend, hosting manifest, or deployment. Git tracks source and lockfile; generated output and dependencies are ignored. Choose deployment only when requested.
+Local npm workflow, Git source/lockfile checkpoints, no secrets or services, no deployment. Next metadata requests no indexing during prototype work. Drei and GSAP remain deferred until they solve a demonstrated problem.

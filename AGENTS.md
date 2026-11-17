@@ -2,6 +2,10 @@
 
 The user is the creative director and architect. Collaborate; do not silently choose a final aesthetic or expand the milestone.
 
+## Collaboration cadence — explicit user correction
+
+The user asked for more creative control and shorter work chunks after study 002. Work on one bounded visual or interaction change at a time. Present meaningful options before implementing it, and return the concrete result for feedback before moving to another creative decision. Do not bundle typography, environments, models, and interaction design into one autonomous sprint. Complete routine verification of the current chunk, then hand direction back to the user. Existing study 002 choices remain unapproved.
+
 ## Read before changing code
 
 - Read `README.md`, `docs/VISION.md`, and `docs/DECISIONS.md` for scope and decision status.
@@ -26,7 +30,7 @@ Use `npm ci` for a clean install, then `npm run build` and `npm run typecheck`. 
 
 ## Current scope
 
-Milestone 1 is a local foundation, not a finished portfolio. No approved brand palette, typeface, 3D style, camera path, or balloon detail interaction exists yet. No Figma/Spline document or external hosting is configured.
+Milestone 1 is complete. The user rejected its conventional website composition. Sky study 002 explores an immersive full-screen world, guided by their cloud reference, narrative sketch, and award-site inspiration. Read `docs/REFERENCES.md` and `docs/ASSETS.md` when changing visuals. No approved final palette, typeface, 3D style, camera path, detail interaction, or next-world theme exists yet. The current dialog and serif title are experiments. No Figma/Spline document or external hosting is configured.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

@@ -1,59 +1,62 @@
 # Interactive Sky Portfolio
 
-A local foundation for a portfolio built as a vertical journey through the sky. The user directs the visual and interaction design. **Everything currently on screen is provisional, including the copy, palette, typeface, and geometry.**
+An exploratory, scroll-led portfolio world for Sanjeev Kamath. The user owns creative direction. **The current sky study is an art-direction prototype, not an approved final visual system.**
 
-## Run locally
+## Run
 
-Use Node.js 22 or newer (Node 22 is recorded in `.nvmrc`) and npm.
+Node 22+ and npm:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL printed by Next.js, normally <http://127.0.0.1:3000>. Stop with Ctrl+C. No secrets or external services are required.
+Open the printed local URL, normally <http://127.0.0.1:3000>. No credentials or external services are required.
 
 ```sh
-npm run build       # production compilation, TypeScript validation, static generation
-npm run typecheck   # standalone TypeScript check
-npm start           # serve the production build
+npm run build
+npm run typecheck
+npm start
 ```
 
-Development and production builds currently use Next.js's Webpack compiler. Turbopack's PostCSS worker failed to bind an internal port in this environment; Webpack builds successfully. This is a tooling workaround, not a change to the application architecture.
+Scripts use Webpack because Turbopack's PostCSS worker failed to bind an internal port in this environment. The framework remains Next.js.
 
-## Milestone 1
+## Current study / 002
 
-- Next.js App Router, TypeScript, Tailwind CSS, React Three Fiber, and Three.js.
-- A viewport-sized sky section and a second section reached through native document scrolling.
-- Three low-complexity decorative balloon placeholders, driven by configuration.
-- Semantic HTML experience placeholders; no fictional professional claims.
-- A separately loaded client canvas, on-demand rendering, capped pixel ratio, and static HTML/CSS fallback.
-- Responsive layout, keyboard links, visible focus, and no automatic motion.
+- Full-screen cloud environment with original generated artwork, a separate transparent foreground layer, and native vertical scrolling.
+- Large name composition, an About airship, three striped 3D experience balloons, and an open-ended horizon.
+- Small chapter navigation, scroll progress, and a motion toggle.
+- Native HTML buttons over decorative 3D objects. Keyboard/touch activation opens a shared native dialog with placeholder content; Escape/close returns focus.
+- Reduced motion removes drift, pointer parallax, cloud travel, and CSS transitions. Pausing motion has the same scene-motion effect. Objects still follow document scrolling to stay aligned with HTML controls.
+- One dynamically loaded R3F canvas. Continuous rendering only for visible object chapters when motion is enabled; demand rendering otherwise. DPR capped at 1.5.
+- The sky artwork and HTML controls remain if the canvas fails.
 
-The objects intentionally have no hover/click/focus behavior yet. There is no camera journey, parallax, modal, or side panel. Drei, GSAP, and ScrollTrigger are deferred until a prototype needs them. No third-party visual assets or downloaded fonts are used.
+This is a hybrid 2.5D composition: raster clouds plus real 3D objects, not volumetric clouds. The name is live serif typography; sculpted cloud lettering remains an option. The airship and balloons are procedural geometry studies, not finished models. A dialog is being tested provisionally; camera focus and side panels remain open. GSAP and Drei are not installed.
 
-## Structure
+The later airplane/projects, islands, ground/contact, and possible transitions into other worlds are not implemented. No real employers, achievements, biography, contact information, or project details have been invented.
+
+## Source map
 
 ```text
-src/
-  app/                    # route, metadata, prototype CSS tokens/layout
-  components/
-    portfolio/            # semantic HTML content
-    scene/                # client canvas, geometry, fallback, scene placement
-  data/                   # portfolio content only
-  types/                  # content contracts
-docs/                     # vision, design, architecture, decisions, roadmap
+src/app/                       route, metadata, provisional global style
+src/components/portfolio/      journey controller and native story dialog
+src/components/scene/          lazy canvas, airship, balloon, shared placement config
+src/data/                      experience content only
+src/hooks/                     reduced-motion and page-visibility policy
+src/types/                     content contract
+public/images/                 optimized generated cloud assets
 ```
 
-Start with [the vision](docs/VISION.md), [architecture](docs/ARCHITECTURE.md), and [decision log](docs/DECISIONS.md). Future agents must follow [AGENTS.md](AGENTS.md).
+Read [VISION](docs/VISION.md), [DESIGN_SYSTEM](docs/DESIGN_SYSTEM.md), [ARCHITECTURE](docs/ARCHITECTURE.md), and [DECISIONS](docs/DECISIONS.md). [ASSETS](docs/ASSETS.md) records provenance and full generation prompts; [REFERENCES](docs/REFERENCES.md) records the inspiration study. Future agents must follow [AGENTS.md](AGENTS.md).
 
-## Manual acceptance checks
+## Test the prototype
 
-1. Load the page and confirm the gradient and three placeholder objects appear.
-2. Scroll to all three experience entries and use both in-page navigation links.
-3. Tab from the top: the skip link appears, followed by the exploration link and return link. Enter activates each link. Decorative objects are not tab stops.
-4. Check a narrow mobile viewport (320–390 px) and desktop; content remains readable without horizontal scrolling. Touch scrolling uses the browser normally.
-5. Enable reduced motion. The scene remains static, with instant anchor navigation.
-6. Disable WebGL before loading: CSS shapes replace the scene, while the same HTML content and navigation remain available.
+1. Scroll through the opening, airship, balloons, and horizon. Use chapter dots or Explore for direct navigation.
+2. Activate the airship and each balloon. Check the correct placeholder title, focus confinement, Escape, close, and focus restoration.
+3. Tab to controls and activate with Enter/Space. Try the skip link.
+4. Toggle motion off, then continue scrolling: objects must remain aligned with their controls.
+5. Check desktop and 320–390 px widths. Use a physical touch device before approving the interaction.
+6. Enable OS reduced motion: no idle drift, pointer parallax, cloud travel, or animated hover transitions.
+7. Test unavailable WebGL: the sky and all HTML story controls should remain usable.
 
-Validation results and remaining work are recorded in [the roadmap](docs/ROADMAP.md). This is a local prototype, with no hosting/deployment configured; prototype metadata requests no indexing.
+See [ROADMAP](docs/ROADMAP.md) for actual verification and remaining limits. This remains local, with no deployment and no-index metadata.
