@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* Prototype tokens. No color or typography here is an approved brand choice. */
+:root {
+  --sky-top: #b9d9ed;
+  --sky-middle: #dcebf1;
+  --sky-bottom: #f6f3e9;
+  --ink: #233d4b;
+  --muted: #456171;
+  --line: #233d4b33;
+  --page-gutter: clamp(1.5rem, 5vw, 5.5rem);
+}
+
+html { scroll-behavior: auto; }
+body { margin: 0; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+* { box-sizing: border-box; }
+::selection { background: #233d4b; color: white; }
+a { text-underline-offset: 0.35em; }
+a:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; border-radius: 2px; }
+.skip-link { position: fixed; z-index: 10; top: 1rem; left: 1rem; padding: 1rem; background: white; transform: translateY(-200%); }
+.skip-link:focus { transform: translateY(0); }
+.sky-journey { background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-middle) 48%, var(--sky-bottom) 100%); overflow-x: clip; }
+.sky-viewport { min-height: 100svh; padding: 2rem var(--page-gutter) 1.5rem; display: flex; flex-direction: column; }
+.project-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.025em; }
+.prototype-label, .scene-footer, figcaption { font-size: 0.75rem; color: var(--muted); }
+.prototype-label { border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 0.75rem; }
+.scene-composition { flex: 1; display: grid; grid-template-columns: 1fr 1.25fr; align-items: center; gap: 1rem; padding-block: 3rem; }
+.eyebrow { font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 600; margin-bottom: 1.5rem; color: var(--muted); }
+h1 { font-size: clamp(2.8rem, 4.8vw, 5rem); font-weight: 400; line-height: 1.06; letter-spacing: -0.065em; }
+.intro-description { max-width: 21rem; font-size: 1rem; line-height: 1.7; color: var(--muted); margin-block: 1.5rem 2rem; }
+.text-link { display: inline-flex; align-items: center; gap: 1.5rem; min-height: 44px; font-size: 0.875rem; text-decoration: underline; }
+.text-link:hover { text-decoration-thickness: 2px; }
+.scene-figure { min-width: 0; margin: 0; }
+.sky-scene { position: relative; width: 100%; height: clamp(20rem, 58svh, 42rem); pointer-events: none; }
+figcaption { text-align: center; margin-top: 0.5rem; line-height: 1.6; }
+.scene-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.experience-section { min-height: 100svh; padding: clamp(4rem, 10vw, 9rem) var(--page-gutter); scroll-margin-top: 2rem; }
+.section-intro { max-width: 40rem; }
+h2 { font-size: clamp(2.1rem, 4vw, 3.5rem); line-height: 1.1; font-weight: 400; letter-spacing: -0.05em; margin-bottom: 1rem; }
+.section-intro > p:last-child { color: var(--muted); line-height: 1.6; }
+.experience-list { list-style: none; padding: 0; margin: 3rem 0 2rem; }
+.experience-row { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; align-items: start; border-top: 1px solid var(--line); padding-block: 1.75rem; }
+.experience-row:last-child { border-bottom: 1px solid var(--line); }
+.experience-number, .placeholder-label { font-size: 0.75rem; color: var(--muted); padding-top: 0.3rem; }
+h3 { font-size: 1.125rem; font-weight: 500; letter-spacing: -0.02em; }
+.experience-row p { margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+.placeholder-label { border: 1px solid var(--line); border-radius: 999px; padding: 0.3rem 0.6rem; }
+.scene-fallback { position: absolute; inset: 0; }
+.fallback-shape { position: absolute; border-radius: 50%; width: 20%; aspect-ratio: 0.76; }
+.fallback-shape-one { background: #e5a988; left: 17%; top: 28%; }
+.fallback-shape-two { background: #a6b3d3; width: 25%; left: 43%; top: 45%; }
+.fallback-shape-three { background: #e9d7aa; width: 16%; left: 72%; top: 20%; }
+
+@media (max-width: 700px) {
+  .sky-viewport { padding-top: 1.25rem; }
+  .prototype-label { font-size: 0.65rem; }
+  .scene-composition { grid-template-columns: 1fr; gap: 0; padding-block: 2.5rem 1.5rem; }
+  h1 { font-size: clamp(2.7rem, 10vw, 4.5rem); }
+  .intro-description { margin-block: 1rem; }
+  .sky-scene { height: 35svh; min-height: 15rem; max-height: 24rem; }
+  .scene-figure { margin-top: 1rem; }
+  .experience-row { grid-template-columns: 1.5rem 1fr; gap: 0.75rem; }
+  .placeholder-label { grid-column: 2; justify-self: start; }
+}
+
+/* The foundation is static; retain this guard as motion is introduced later. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
