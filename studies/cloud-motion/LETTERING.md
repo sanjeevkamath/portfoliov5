@@ -1,0 +1,15 @@
+# Cloud lettering
+
+The front-facing hero uses 13 independent transparent WebP images, in `glyphs/`, totaling 268,828 bytes. The original Figma wordmark is kept as `cloud-name.png` for visual reference. The browser loads the WebP letters and does not also load the PNG.
+
+The images provide the existing cloud look with baked highlights and shadows. Each glyph sways at its own pace using CSS. Mouse or pen motion shifts the entire wordmark, with a stronger push and tilt on nearby letters. A grabbed glyph follows the pointer until release, then the same spring returns it to its resting position. Touch retains native scrolling. Reduced motion disables sway and dragging. Each glyph is decorative and the heading exposes the full name once.
+
+React and Motion can own the same images and spring behavior when this study is integrated into a React app. React Three Fiber with optimized GLB assets would offer real thickness, changing light and larger rotations, at the cost of authoring meshes and materials, shipping a renderer and loader, and profiling the combined scene on mobile. Blender becomes useful if the design needs those capabilities or the camera moves around the lettering. The current interaction only needs shallow turns.
+
+## Asset source
+
+Generated with the built-in OpenAI ImageGen tool using the original Figma wordmark as an edit reference. The isolated glyphs were cropped in the transparent gaps and encoded as WebP with alpha. No downloaded font or model is included.
+
+## Final generation prompt
+
+Edit the supplied cloud lettering reference into a single production sprite sheet for an interactive name. Exact glyphs, left to right: top row S A N J E E V; bottom row K A M A T H. Both Es on top, three As total. Retain the reference's palpable billowy white cumulus volume and already established bold rounded uppercase letterforms, relatively tall strokes, detailed wispy natural edges, warm white sunlight from upper left, desaturated blue-gray lavender shadows to lower right. Camera straight on. The critical change: all 13 glyphs are completely separate assets in the sprite sheet. Put every letter in its own invisible grid cell, each centered, with at least 5% padding on all sides of each cell and a generous transparent alley between every neighboring letter. Draw one letter per cell with ample empty space between columns; absolutely no touches, overlap, bridges, or shared wisps across cells even when letter shapes could nest. Clear transparent row gap. Turn the reference's letter spacing into wide deliberate tracking, while keeping the glyphs bold and full. Render seven letters in row one, six in row two, both rows optically centered at same cap height and baseline. Full landscape canvas 2:1 if possible. Background truly transparent alpha everywhere outside the letters and in holes. No visible grid, no decorative clouds, no captions, no other shapes, no borders, no backdrop. Keep all glyphs inside canvas. This is carefully art-directed photographic cloud lettering in the same style as the reference, with each letter readable and fully isolated.
